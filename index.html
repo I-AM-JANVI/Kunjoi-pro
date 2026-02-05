@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For You ❤️</title>
+    <style>
+        /* --- CSS STYLES --- */
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #fdfbfb 0%, #ebedee 100%);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+        }
+
+        /* Floating Hearts Background */
+        .heart-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .heart {
+            position: absolute;
+            color: #ffb7b2;
+            opacity: 0.5;
+            animation: float 6s linear infinite;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) scale(0.5); opacity: 0; }
+            50% { opacity: 0.8; }
+            100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+        }
+
+        /* Main Card */
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            animation: popUp 1s ease-out;
+            border: 2px solid #ffe6e6;
+            position: relative;
+            z-index: 10;
+        }
+
+        @keyframes popUp {
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        /* Photo Frame */
+        .photo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 20px;
+            border-radius: 50%;
+            border: 8px solid #ff4d4d; /* Beautiful love border */
+            padding: 5px;
+            box-shadow: 0 0 15px rgba(255, 77, 77, 0.4);
+            overflow: hidden;
+            background: white;
+        }
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+
+        h1 {
+            color: #ff4d4d;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            font-size: 1.1em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        /* Buttons */
+        .buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1.2em;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .yes-btn {
+            background-color: #ff4d4d;
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 77, 77, 0.3);
+        }
+        .yes-btn:hover {
+            transform: scale(1.1);
+            background-color: #ff3333;
+        }
+
+        .no-btn {
+            background-color: #ddd;
+            color: #555;
+            position: relative; /* Allows movement */
+        }
+
+        /* Success Message (Hidden by default) */
+        .success-message {
+            display: none;
+            color: #ff4d4d;
+        }
+        .success-message h2 {
+            font-size: 2em;
+            animation: bounce 1s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="heart-bg" id="heartBg"></div>
+
+    <div class="card" id="mainCard">
+        <div class="photo-frame">
+            <img src="her-photo.jpg" alt="Her Photo">
+        </div>
+
+        <h1>Will you be mine?</h1>
+        <p>
+            From the moment I met you, my world became brighter. 
+            You are my happiness and my best friend. 
+            <br><br>
+            Will you make me the happiest person alive?
+        </p>
+
+        <div class="buttons">
+            <button class="yes-btn" onclick="sayYes()">Yes! ❤️</button>
+            <button class="no-btn" id="noBtn" onmouseover="moveButton()">No</button>
+        </div>
+    </div>
+
+    <div class="card success-message" id="successCard">
+        <div class="photo-frame" style="border-color: #4CAF50;">
+             <img src="her-photo.jpg" alt="Happy">
+        </div>
+        <h2>Yay! I Love You! ❤️</h2>
+        <p>Best decision ever!</p>
+    </div>
+
+    <script>
+        /* --- JAVASCRIPT LOGIC --- */
+        
+        // 1. Create Floating Hearts
+        function createHearts() {
+            const bg = document.getElementById('heartBg');
+            for (let i = 0; i < 20; i++) {
+                let heart = document.createElement('div');
+                heart.innerHTML = '❤️';
+                heart.classList.add('heart');
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = Math.random() * 3 + 3 + 's';
+                heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+                bg.appendChild(heart);
+            }
+        }
+        createHearts();
+
+        // 2. The "No" Button runs away
+        function moveButton() {
+            const btn = document.getElementById('noBtn');
+            const x = Math.random() * (window.innerWidth - 200);
+            const y = Math.random() * (window.innerHeight - 200);
+            
+            // Make sure it doesn't go off screen, simple calculation
+            // We switch to 'fixed' positioning to let it fly anywhere
+            btn.style.position = 'fixed';
+            btn.style.left = Math.random() * 80 + '%';
+            btn.style.top = Math.random() * 80 + '%';
+        }
+
+        // 3. The "Yes" Action
+        function sayYes() {
+            document.getElementById('mainCard').style.display = 'none';
+            document.getElementById('successCard').style.display = 'block';
+            
+            // Explosion of hearts
+            setInterval(createHearts, 200);
+        }
+    </script>
+</body>
+</html>
